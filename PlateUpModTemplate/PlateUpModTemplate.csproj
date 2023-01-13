@@ -8,27 +8,16 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PlateUpDir Condition="Exists('CHANGEME\steamapps\common\PlateUp\PlateUp')">CHANGEME\steamapps\common\PlateUp\PlateUp</PlateUpDir>
-        <ManagedDir>$(PlateUpDir)\PlateUp_Data\Managed\</ManagedDir>
+        <GameLibsDir>..\.GameAssemblies\</GameLibsDir>
     </PropertyGroup>
 
     <ItemGroup>
-        <ExcludedAssemblyFiles Include="$(ManagedDir)netstandard.dll;$(ManagedDir)System.*" InProject="false" />
-        <AssemblyFiles Include="$(ManagedDir)*.dll;$(CoreDir)*.dll;@(Dependencies)" Exclude="@(ExcludedAssemblyFiles)" InProject="false" />
+        <AssemblyFiles Include="$(GameLibsDir)*.dll" InProject="false" />
         <Reference Include="@(AssemblyFiles)" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     </ItemGroup>
-
-    <ItemGroup>
-        <OutputFiles Include="$(TargetPath);$(TargetDir)$(TargetName).pdb" InProject="false" />
-    </ItemGroup>
-
-    <Target Name="ExportMods" AfterTargets="PostBuildEvent">
-        <!-- Copies dll and pdb to mods folder -->
-        <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(PlateUpDir)\Mods\$(TargetName)" />
-    </Target>
     
 </Project>
